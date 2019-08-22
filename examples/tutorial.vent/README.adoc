@@ -122,27 +122,27 @@ Users look like so:
 These can all be achieved by modifying files in src/tutorial/vent/lib.clj.
 
 [[fetch_db_vents]]
-=== Fetch database vents
+=== [x] Fetch database vents
 
 Currently, the vents from `all` are hard-coded.
 It would be great if `all` would return all the vents from the database.
 
 TIP: Use `(db/read)` and link:https://clojuredocs.org/clojure.core/get[get] the `:vents` key out of it.
 
-=== Implement Add Vent
+=== [x] Implement Add Vent
 
 Add the ability to create a new vent.
 
 TIP: link:https://clojuredocs.org/clojure.core/update[update] the `:vents` in the database with link:https://clojuredocs.org/clojure.core/conj[conj]. Use the `generate-id` function to create an id for the vent.
 
 [[favorites_list]]
-=== Implement favorites list
+=== [x] Implement favorites list
 
 Take the list of vents in the database, and filter them to show only the favorites on the favorites page.
 
 TIP: Use link:https://clojuredocs.org/clojure.core/filter[filter] and link:https://clojure.org/guides/learn/functions#_anonymous_functions[anonymous functions] to filter the list of vents.
 
-=== Add author to vents
+=== [x] Add author to vents
 
 Depends on <<fetch_db_vents>>.
 

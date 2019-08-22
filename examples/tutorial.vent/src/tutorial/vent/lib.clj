@@ -4,16 +4,7 @@
 
 (defn favorites
   []
-  [{:id "1"
-    :text "A favorited tweet"
-    :author {:name "John smith"}
-    :username "john_smith"
-    :favorite? true}
-   {:id "2"
-    :text "Another favorite tweet"
-    :author {:name "Jane Smith"}
-    :username "jane_smith"
-    :favorite? true}])
+  (filter #(true? (:favorite? %1)) (all)))
 
 (defn all
   []
