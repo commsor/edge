@@ -20,8 +20,10 @@
   (let [data (db/read)
         vents (:vents data)
         users (:users data)
-        get-author (fn [vent] (get users (get vent :username)))
-        add-author-to-vent (fn [vent] (merge vent {:author (get-author vent)}))
+        get-author (fn [vent] (let [username (get vent :username)
+                                    user (get users username)]
+                                user))
+        add-author-to-vent (fn [vent] (assoc vent :author (get-author vent)))
         user-annotated-vents (map add-author-to-vent vents)]
     user-annotated-vents))
 
