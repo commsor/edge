@@ -57,10 +57,8 @@
 (defn toggle-follow
   [{:keys [to-follow username]}]
   (db/transact (let [data (db/read)
-                     following (get-in data [:users username :follows])
-                     new-following (into [] (if (some #(= to-follow %) following)
-                                     (filter #(not= to-follow %) following)
-                                     (conj following to-follow)))
-                     qwe (prn new-following)
-                     new-data (assoc-in data [:users username :follows] new-following)]
+                     updater (fn [following] (into [] (if (some #(= to-follow %) following)
+                                                       (filter #(not= to-follow %) following)
+                                                       (conj following to-follow))))
+                     new-data (update-in data [:users username :follows] updater)]
                  (db/store new-data))))
