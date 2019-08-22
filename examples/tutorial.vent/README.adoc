@@ -164,7 +164,7 @@ Add the ability to see who your followers are.
 
 TIP: https://clojuredocs.org/clojure.core/select-keys[select-keys] on users, based on a https://clojuredocs.org/clojure.core/keep[keep] on the `:users` which have `username` in their `:follows`.
 
-=== Implement (un)Follow Button
+=== [x] Implement (un)Follow Button
 
 You will need to complete <<followers_list>> to see this working.
 

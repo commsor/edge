@@ -4,7 +4,7 @@
 
 (defn favorites
   []
-  (filter #(true? (:favorite? %1)) (all)))
+  (filter #(true? (:favorite? %)) (all)))
 
 (defn all
   []
@@ -56,4 +56,11 @@
 
 (defn toggle-follow
   [{:keys [to-follow username]}]
-  (println username "is follwoing or unfollowing" to-follow))
+  (db/transact (let [data (db/read)
+                     following (get-in data [:users username :follows])
+                     new-following (into [] (if (some #(= to-follow %) following)
+                                     (filter #(not= to-follow %) following)
+                                     (conj following to-follow)))
+                     qwe (prn new-following)
+                     new-data (assoc-in data [:users username :follows] new-following)]
+                 (db/store new-data))))
