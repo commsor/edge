@@ -17,15 +17,13 @@
 
 (defn all
   []
-  [{:id "1"
-    :text "A hardcoded tweet"
-    :author {:name "John Smith"}
-    :username "john_smith"
-    :favorite? true}
-   {:id "2"
-    :text "A second hardcoded tweet"
-    :author {:name "Jane Smith"}
-    :username "jane_smith"}])
+  (let [data (db/read)
+        vents (:vents data)
+        users (:users data)
+        get-author (fn [vent] (get users (get vent :username)))
+        add-author-to-vent (fn [vent] (merge vent {:author (get-author vent)}))
+        user-annotated-vents (map add-author-to-vent vents)]
+    user-annotated-vents))
 
 (defn followers
   [{:keys [username]}]
