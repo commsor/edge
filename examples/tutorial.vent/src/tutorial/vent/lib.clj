@@ -38,7 +38,15 @@
 
 (defn toggle-favorite
   [{:keys [vent-id]}]
-  (println "toggling favorite on" vent-id))
+  (db/transact (let [data (db/read)
+                     vents (:vents data)
+                     update-vent (fn [vent]
+                                   (if (= (:id vent) vent-id)
+                                     (assoc vent :favorite? (not (:favorite? vent)))
+                                     vent))
+                     new-vents (into [] (map update-vent vents))
+                     new-data (assoc data :vents new-vents)]
+                 (db/store new-data))))
 
 (defn- generate-id
   []
