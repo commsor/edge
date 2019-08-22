@@ -2,10 +2,6 @@
   (:require
     [tutorial.vent.db :as db]))
 
-(defn favorites
-  []
-  (filter #(true? (:favorite? %)) (all)))
-
 (defn all
   []
   (let [data (db/read)
@@ -17,6 +13,10 @@
         add-author-to-vent (fn [vent] (assoc vent :author (get-author vent)))
         user-annotated-vents (map add-author-to-vent vents)]
     user-annotated-vents))
+
+(defn favorites
+  []
+  (filter #(true? (:favorite? %)) (all)))
 
 (defn followers
   [{:keys [username]}]
