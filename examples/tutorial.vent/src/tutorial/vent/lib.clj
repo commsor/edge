@@ -20,11 +20,11 @@
 
 (defn followers
   [{:keys [username]}]
-  {"john_smith"
-   {:name "John Smith"}
-   "jane_smith"
-   {:name "Jane Smith"
-    :following? true}})
+  (let [data (db/read)
+        users (:users data)
+        user-is-follower? (fn [[_k user]] (some #(= username %) (:follows user)))
+        followers (into {} (filter user-is-follower? users))]
+   followers))
 
 (defn following
   [{:keys [username]}]

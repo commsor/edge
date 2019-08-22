@@ -158,7 +158,7 @@ Add the ability to see who you follow.
 TIP: https://clojuredocs.org/clojure.core/select-keys[select-keys] over users in your `:follows` key.
 
 [[followers_list]]
-=== Implement Followers page
+=== [x] Implement Followers page
 
 Add the ability to see who your followers are.
 
