@@ -151,7 +151,7 @@ Fetch the user information from the database based on the `:username` key in the
 
 TIP: Use link:https://clojuredocs.org/clojure.core/map[map] to modify each of the vents with link:https://clojuredocs.org/clojure.core/assoc[assoc], and link:https://clojuredocs.org/clojure.core/get-in[get-in] to get the corresponding user from the database.
 
-=== Implement Following page
+=== [x] Implement Following page
 
 Add the ability to see who you follow.
 

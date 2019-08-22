@@ -28,9 +28,13 @@
 
 (defn following
   [{:keys [username]}]
-  {"jane_smith"
-   {:name "Jane Smith"
-    :following? true}})
+  (let [data (db/read)
+        users (:users data)
+        me (get users username)
+        followed-usernames (:follows me)
+        followed-users (select-keys users followed-usernames)
+        set-following (fn [[k v]] [k (assoc v :following? true)])]
+    (into {} (map set-following followed-users))))
 
 (defn toggle-favorite
   [{:keys [vent-id]}]
