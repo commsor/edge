@@ -51,9 +51,13 @@
 
 (defn add-vent
   [{:keys [text username]}]
-  (println username
-           "is venting about" text
-           "with id" (generate-id)))
+  (db/transact (let [data (db/read)
+                     new-vent {:id (generate-id)
+                               :username username
+                               :text text}
+                     new-vents (conj (:vents data) new-vent)
+                     new-data (assoc data :vents new-vents)]
+                 (db/store new-data))))
 
 (defn toggle-follow
   [{:keys [to-follow username]}]

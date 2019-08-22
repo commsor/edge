@@ -7,8 +7,14 @@
     [tutorial.vent.reload :as vent.reload])
   (:refer-clojure :exclude [read]))
 
-(def ^:private file-lock (Object.))
+(def file-lock (Object.))
 (def ^:private file (io/file "db.edn"))
+
+(defmacro transact
+  "Conduct a series of operations within the file-lock mutex. Can be used to 
+  prevent race conditions during updating (read, change, write)."
+  [& body]
+  `(locking file-lock ~@body))
 
 (defn- ->edn
   [x]
@@ -30,7 +36,7 @@
 
 (defn reset
   []
-  (locking file-lock
+  (transact
     (spit file
           (->edn
             {:users {"jane_smith" {:name "Jane Smith"}
@@ -47,17 +53,17 @@
                       :favorite? true}]}))
     (vent.reload/frontend)))
 
-(locking file-lock
+(transact
   (when-not (.exists file)
     (reset)))
 
 (defn store
   [x]
-  (locking file-lock
+  (transact
     (spit file (->edn x))
     (vent.reload/frontend)))
 
 (defn read
   []
-  (locking file-lock
+  (transact
     (edn/read (-> file io/reader clojure.lang.LineNumberingPushbackReader.))))
